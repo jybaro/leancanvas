@@ -1,0 +1,18 @@
+@function bgcolor() {
+    @return #F00;
+}
+%abstractbody {
+    display: grid;
+    margin: 0;
+    background-color: bgcolor();
+}
+@mixin paddingdefault($padding: 16px) {
+    padding: $padding;
+    @content;
+}
+body {
+    @extend %abstractbody;
+    @include paddingdefault(24px){
+        font-family: Arial;
+    }
+}
