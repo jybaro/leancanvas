@@ -1,8 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Canvas from './components/Canvas';
+import React from "react";
+import ReactDOM from "react-dom";
+import Home from "./pages/Home";
 
-ReactDOM.render(
-    <Canvas />,
-    document.getElementById('app'),
-);
+ReactDOM.render(<Home />, document.getElementById("app"));
