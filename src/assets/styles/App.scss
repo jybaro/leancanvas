@@ -70,3 +70,31 @@ body {
   }
   @include responsivecontainer;
 }
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  &__zone {
+    flex-direction: row;
+  }
+}
+
+.RM {
+  &__character {
+    &__list {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    &__resume {
+    }
+  }
+  &__loadMore {
+    width: 100%;
+    border: unset;
+    background: #393;
+    color: #def;
+    padding: 1rem;
+    border-radius: 2rem;
+    margin-top: 1rem;
+    font-size: 2rem;
+  }
+}

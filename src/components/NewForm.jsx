@@ -1,9 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 class NewForm extends React.Component {
+  handleSubmit = () => {};
   render = () => (
-    <div>
-      <form action="" onSubmit={this.props.onSubmit}>
+    <React.Fragment>
+      <form action="" onSubmit={this.handleSubmit}>
         <div>
           <label htmlFor="title">Title:</label>
           <input
@@ -34,11 +36,15 @@ class NewForm extends React.Component {
             placeholder="Example: my@email.com"
           />
         </div>
-        <div>
-          <button>Save</button>
-        </div>
+        {this.props.newFormValues.title &&
+          this.props.newFormValues.name &&
+          this.props.newFormValues.email && (
+            <div>
+              <Link to="/workspace">Generate new canvas</Link>
+            </div>
+          )}
       </form>
-    </div>
+    </React.Fragment>
   );
 }
 export default NewForm;

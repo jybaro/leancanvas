@@ -1,5 +1,4 @@
 import React from "react";
-import "../assets/styles/App.scss";
 
 import Block from "./Block";
 import Mailto from "./Mailto";
@@ -15,78 +14,83 @@ import imageeight from "../assets/static/images/8-metrics.png";
 import imagenine from "../assets/static/images/9-unfair.png";
 
 class Canvas extends React.Component {
-  blocks = [
-    {
-      title: "Customer Segments",
-      imageUrl: imageone,
-      description: "",
-      extra: {
-        title: "Early adopters",
-        description: "",
-      },
-    },
-    {
-      title: "Problems",
-      imageUrl: imagetwo,
-      description: "",
-      extra: {
-        title: "Bypass",
-        description: "",
-      },
-    },
-    {
-      title: "Unique Value Proposition",
-      imageUrl: imagethree,
-      description: "",
-      extra: {
-        title: "Slogan",
-        description: "",
-      },
-    },
-    {
-      title: "Solution",
-      imageUrl: imagefour,
-      description: "",
-    },
-    {
-      title: "Channels",
-      imageUrl: imagefive,
-      description: "",
-    },
-    {
-      title: "Incomes",
-      imageUrl: imagesix,
-      description: "",
-    },
-    {
-      title: "Outcomes",
-      imageUrl: imageseven,
-      description: "",
-    },
-    {
-      title: "Metrics",
-      imageUrl: imageeight,
-      description: "",
-    },
-    {
-      title: "Unfair Advantage",
-      imageUrl: imagenine,
-      description: "",
-    },
-  ];
+  constructor(props) {
+    super(props);
+    this.state = {
+      blocks: [
+        {
+          title: "Customer Segments",
+          imageUrl: imageone,
+          description: "",
+          extra: {
+            title: "Early adopters",
+            description: "",
+          },
+        },
+        {
+          title: "Problems",
+          imageUrl: imagetwo,
+          description: "",
+          extra: {
+            title: "Bypass",
+            description: "",
+          },
+        },
+        {
+          title: "Unique Value Proposition",
+          imageUrl: imagethree,
+          description: "",
+          extra: {
+            title: "Slogan",
+            description: "",
+          },
+        },
+        {
+          title: "Solution",
+          imageUrl: imagefour,
+          description: "",
+        },
+        {
+          title: "Channels",
+          imageUrl: imagefive,
+          description: "",
+        },
+        {
+          title: "Incomes",
+          imageUrl: imagesix,
+          description: "",
+        },
+        {
+          title: "Outcomes",
+          imageUrl: imageseven,
+          description: "",
+        },
+        {
+          title: "Metrics",
+          imageUrl: imageeight,
+          description: "",
+        },
+        {
+          title: "Unfair Advantage",
+          imageUrl: imagenine,
+          description: "",
+        },
+      ],
+    };
+  }
 
   render = () => (
-    <div>
+    <React.Fragment>
       <div>
         <h1>{this.props.form.title}</h1> by{" "}
         <Mailto email={this.props.form.email}>{this.props.form.name}</Mailto>
       </div>
       <div className="container">
-        {this.blocks.map((blockData, index) => (
+        {this.state.blocks.map((blockData, index) => (
           <Block key={index} number={index + 1} blockData={blockData}></Block>
         ))}
       </div>
-    </div>
+    </React.Fragment>
   );
 }
 

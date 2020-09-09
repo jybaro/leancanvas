@@ -1,81 +1,86 @@
 import React from "react";
-import New from "./New";
-import WorkSpace from "./WorkSpace";
+import "../assets/styles/App.scss";
+import { Link } from "react-router-dom";
+
+import RMCharacterResume from "../components/RMCharacterResume";
 
 class Home extends React.Component {
-  state = {
-    page: "Home",
-    form: {
-      title: "",
-      name: "",
-      email: "",
-    },
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      error: null,
+      data: { results: [] },
+      page: 1,
+    };
+  }
+  componentDidMount = () => {
+    console.warn("componentDidMount");
+    this.fetchCharacters();
   };
-  handleClick = (e) => {
-    e.preventDefault();
+  fetchCharacters = async () => {
     this.setState({
-      page: "WorkSpace",
+      loading: true,
+      error: null,
     });
-    console.log(this.state);
+    try {
+      const response = await fetch(
+        `https://rickandmortyapi.com/api/character/?page=${this.state.page}`
+      );
+      const data = await response.json();
+      this.setState({
+        loading: false,
+        error: null,
+        data: {
+          results: this.state.data.results.concat(data.results),
+        },
+        page: this.state.page + 1,
+      });
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error: error,
+      });
+    }
   };
-  handleNewClick = (e) => {
-    e.preventDefault();
+  loadMore = (e) => {
     this.setState({
-      page: "New",
+      loading: true,
     });
+    this.fetchCharacters();
   };
-  handleNavChange = (e) => {
-    console.warn("en handleNavChange");
-    this.setState({
-      page: "Home",
-    });
-  };
-  handleNewFormChange = (e) => {
-    this.setState({
-      form: {
-        ...this.state.form,
-        [e.target.name]: e.target.value,
-      },
-    });
-  };
-  handleNewFormSubmit = (e) => {
-    e.preventDefault();
-    this.setState({
-      page: "WorkSpace",
-    });
-  };
-
   render = () => {
     return (
-      <div>
-        {this.state.page === "Home" && (
-          <div>
-            <h1>Home</h1>
-            <div>
-              <a href="#" onClick={this.handleClick}>
-                WorkSpace
-              </a>
-            </div>
-            <div>
-              {" "}
-              <a href="#" onClick={this.handleNewClick}>
-                New
-              </a>
-            </div>
-          </div>
+      <React.Fragment>
+        <h1>Lean Canvas Generator</h1>
+        <div>
+          {this.props.form.title && this.props.form.name && (
+            <Link to="workspace">Return to WorkSpace</Link>
+          )}
+        </div>
+        <div>
+          <Link to="new">New</Link>
+        </div>
+        <div>
+          <Link to="list">List</Link>
+        </div>
+        <h1>Rick and Morty</h1>
+
+        <div className="RM__character__list">
+          {this.state.data.results.map((character, index) => (
+            <RMCharacterResume character={character} key={index} />
+          ))}
+        </div>
+        {this.state.loading ? (
+          "Loading..."
+        ) : this.state.error ? (
+          this.state.error.message
+        ) : (
+          <button className="RM__loadMore" onClick={this.loadMore}>
+            LOAD MORE
+          </button>
         )}
-        {this.state.page === "WorkSpace" && (
-          <WorkSpace onChange={this.handleNavChange} form={this.state.form} />
-        )}
-        {this.state.page === "New" && (
-          <New
-            onChange={this.handleNavChange}
-            onNewFormChange={this.handleNewFormChange}
-            onNewFormSubmit={this.handleNewFormSubmit}
-            newFormValues={this.state.form}
-          />
-        )}
-      </div>
+      </React.Fragment>
     );
   };
 }
